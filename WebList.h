@@ -6,15 +6,13 @@
 
 /// <summary>
 /// WebList class is used for handling page lists.
-/// Default check time is 300 second.
 /// </summary>
 class WebList {
 public:
-	WebList(int time = 300) : webList(), checkTime(time) {}
+	WebList(int time = 300) : webList() {}
 	bool uploadList(const std::string& filename);
 	void checkAll();
 	void saveLog() const;
 private:
 	std::vector<WebPage> webList;
-	int checkTime;
 };

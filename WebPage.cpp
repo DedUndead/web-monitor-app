@@ -113,7 +113,7 @@ ostream& operator<<(ostream& out, const WebPage& targetPage)
 {
 	out << setw(70) << left << targetPage.url 
 		<< setw(15) << targetPage.status 
-		<< setw(6) << right << targetPage.responseTime;
+		<< setw(6) << right << targetPage.responseTime << "ms";
 	return out;
 }
 

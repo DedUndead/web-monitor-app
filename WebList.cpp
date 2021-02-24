@@ -85,7 +85,7 @@ void WebList::saveLog() const
 		auto currentTime = chrono::system_clock::now();
 		time_t time = chrono::system_clock::to_time_t(currentTime);
 
-		outputFile << put_time(gmtime(&time), "%F %T") << " " << page << endl;
+		outputFile << put_time(gmtime(&time), "%F %X") << " " << page << endl;
 	}
 
 	outputFile << endl;

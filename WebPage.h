@@ -6,7 +6,7 @@
 #include <string>
 
 /// <summary>
-/// WebPage class handles HTTP request to induvidual pages
+/// WebPage class handles HTTP request to induvidual pages.
 /// </summary>
 class WebPage
 {
