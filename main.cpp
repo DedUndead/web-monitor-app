@@ -8,6 +8,7 @@
 #include <iostream>
 #include "WebPage.h"
 #include "WebList.h"
+#include "Server.h"
 
 #define CHECK_TIME_MIN 10
 #define CHECK_TIME_MAX 86400
@@ -16,14 +17,20 @@
 
 using namespace std;
 
+
 int main(int argc, char* argv[])
 {
 	// TODO: Command line arguments for filename, seconds
 	// TODO: HTTP host
-	// TODO: save initial URLs
+	// TODO: save initial URLs, optimize 
+	// TODO: clear logs
+	// TODO: conditional compiling
 	WebList webList;
+	Server httpServer;
 	string confFileName;
 	int checkingPeriod = CHECK_TIME_DEFAULT; // Default checking period
+
+	httpServer.runServer();
 
 	// Terminate the program & send instructions if no arguments were passed/invalid number of arguments
 	if (argc == 1 || argc > ARG_MAX) {

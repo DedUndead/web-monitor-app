@@ -10,6 +10,8 @@
 #include "WebList.h"
 #include "WebPage.h"
 
+#define LOGNAME_DEFAULT "weblist.log"
+
 using namespace std;
 
 /// <summary>
@@ -76,7 +78,7 @@ void WebList::checkAll()
 void WebList::saveLog() const
 {
 	ofstream outputFile;
-	outputFile.open("weblist.log");
+	outputFile.open("weblist.log", std::ios_base::app); // Open file in append mode
 
 	// Print the log line by line in format:
 	// DATE TIME URL STATUS RESPONSE_TIME
