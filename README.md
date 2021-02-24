@@ -77,5 +77,7 @@ The path must not include non-ASCII characters.
 
 Mongoose C-based library: https://github.com/cesanta/mongoose<br>
 Mongoose HTTP-server C-example: https://github.com/cesanta/mongoose/tree/master/examples/http-server<br>
-Boost Extension Website: https://www.boost.org/
-ASIO Networking Tutorial: https://www.youtube.com/watch?v=2hNdkYInj4g&ab_channel=javidx9
+Boost Extension Website: https://www.boost.org/<br>
+ASIO Networking Tutorial: https://www.youtube.com/watch?v=2hNdkYInj4g&ab_channel=javidx9<br><br><br>
+
+Pavel Arefyev, Feb 2021
