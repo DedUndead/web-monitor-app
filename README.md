@@ -73,6 +73,11 @@ The default configuration file is set to testdata.cfg.
 In order to use the source code, Boost library must be installed to your IDE. [Installation guide](https://www.youtube.com/watch?v=5afpq2TkOHc&t=419s&ab_channel=ThomasKim) (Taken from Thomas Kin educational YouTube channel).<br>
 The path must not include non-ASCII characters.
 
+### Improvement Space
+
+* Decrease additional delays by redesigning the order in checkAll() member function of WebList class.
+* Change the parsing of command line options to fit the modern designs
+
 # References and additional materials
 
 Mongoose C-based library: https://github.com/cesanta/mongoose<br>
