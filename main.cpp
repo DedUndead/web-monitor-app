@@ -12,6 +12,7 @@
 #include "headers/WebList.h"
 #include "headers/Server.h"
 
+#define DEFAULT_CFG "testdata.cfg"
 #define CHECK_TIME_MIN 30
 #define CHECK_TIME_MAX 86400
 #define CHECK_TIME_DEFAULT 30
@@ -29,8 +30,8 @@ int main(int argc, char* argv[])
 	string confFileName;
 	int checkingPeriod = CHECK_TIME_DEFAULT; // Default checking period
 
-	// Terminate the program & send instructions if no arguments were passed/invalid number of arguments
-	if (argc == 1 || argc > ARG_MAX) {
+	// Terminate the program & send instructions if invalid number of arguments
+	if (argc > ARG_MAX) {
 		cout << " Invalid number of arguments passed!" << endl;
 		cout << " *First argument - Configuration file." << endl;
 		cout << " Second argument - Checking period time (default = 300s)." << endl;
@@ -38,7 +39,12 @@ int main(int argc, char* argv[])
 	}
 	
 	// Save the configuration file name
-	confFileName = argv[1];
+	if (argc == 1) {
+		confFileName = DEFAULT_CFG;
+	}
+	else {
+		confFileName = argv[1];
+	}
 	cout << " Uploading configuration from " << confFileName << "..." << endl;
 	
 	// Saving the checking period time process if present
