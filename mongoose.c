@@ -16,7 +16,7 @@
 // license, as set out in <https://www.cesanta.com/license>.
 
 
-#include "mongoose.h"
+#include "headers/mongoose.h"
 
 #ifdef MG_ENABLE_LINES
 #line 1 "src/private.h"

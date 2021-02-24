@@ -13,6 +13,10 @@ public:
 	bool uploadList(const std::string& filename);
 	void checkAll();
 	void saveLog() const;
+	void updateHTML() const;
 private:
 	std::vector<WebPage> webList;
+	std::string getTime() const;
+	std::string getHeadHTML() const;
+	std::string getTailHTML() const;
 };

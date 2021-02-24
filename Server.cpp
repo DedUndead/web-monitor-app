@@ -1,30 +1,18 @@
-#pragma once
-
 #include <string>
+#include "headers/Server.h"
 extern "C" {
-	#include "mongoose.h"
+#include "headers/mongoose.h"
 }
-void eHandler(struct mg_connection* connector, int ev, void* ev_data, void* fn_data);
+
 
 /// <summary>
-/// HTTP server implementation with the use of mongoose library.
-/// Library source: https://github.com/cesanta/mongoose
+/// Run server with event handler options
 /// </summary>
-class Server {
-public:
-	Server(const char *target = "http://localhost:8000") : address(target) {}
-	bool runServer();
-private:
-	const char *address;
-};
-
-/**
-* Function to start HTTP server
-*/
+/// <returns>False if connection to the server failed</returns>
 bool Server::runServer()
 {
 	struct mg_mgr eManager;
-	struct mg_connection *connector;
+	struct mg_connection* connector;
 
 	// Run Mongoose server
 	mg_mgr_init(&eManager);
@@ -37,8 +25,14 @@ bool Server::runServer()
 	}
 
 	while (true) mg_mgr_poll(&eManager, 1000); // Run the server
+	mg_mgr_free(&eManager);
+
+	return true;
 }
 
+/**
+* Standard event handler implementation
+*/
 void eHandler(struct mg_connection* connector, int ev, void* ev_data, void* fn_data) {
 	if (ev == MG_EV_HTTP_MSG) {
 		struct mg_http_serve_opts opts = { "./serverdir", "#.shtml" };

@@ -15,7 +15,7 @@ class WebPage
 public:
 	// Default constructor
 	WebPage(std::string target = "Undef", std::string condition = "Default") : 
-		    response("Undef"), content(condition), url(target), status("Undef") {} 
+		    response("Undef"), content(condition), url(target), status("Undef"), responseTime(0) {} 
 	bool request();
 	bool checkCondition() const;
 	// Setters 
@@ -24,10 +24,11 @@ public:
 	// Getter in case they are needed / debug purpose
 	std::string getResponse() const { return response; } 
 	std::string getStatus() const { return status; }
+	std::string getFormatHTML() const;
 private:
-	std::string solveDirectory();
-	std::string solveDomain();
-	void cutProtocol();
+	std::string solveDirectory(std::string npURL);
+	std::string solveDomain(std::string npURL);
+	std::string cutProtocol();
 	std::string content;
 	std::string response;
 	std::string url;

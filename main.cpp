@@ -6,31 +6,28 @@
 */
 
 #include <iostream>
-#include "WebPage.h"
-#include "WebList.h"
-#include "Server.h"
+#include <thread>
+#include <chrono>
+#include "headers/WebPage.h"
+#include "headers/WebList.h"
+#include "headers/Server.h"
 
-#define CHECK_TIME_MIN 10
+#define CHECK_TIME_MIN 30
 #define CHECK_TIME_MAX 86400
-#define CHECK_TIME_DEFAULT 10
+#define CHECK_TIME_DEFAULT 30
 #define ARG_MAX 3 // Maximum number of arguments
+#define SERVER_ADDRESS "http://localhost:8000"
 
 using namespace std;
 
 
 int main(int argc, char* argv[])
 {
-	// TODO: Command line arguments for filename, seconds
-	// TODO: HTTP host
-	// TODO: save initial URLs, optimize 
+	// TODO: optimize 
 	// TODO: clear logs
-	// TODO: conditional compiling
 	WebList webList;
-	Server httpServer;
 	string confFileName;
 	int checkingPeriod = CHECK_TIME_DEFAULT; // Default checking period
-
-	httpServer.runServer();
 
 	// Terminate the program & send instructions if no arguments were passed/invalid number of arguments
 	if (argc == 1 || argc > ARG_MAX) {
@@ -57,20 +54,27 @@ int main(int argc, char* argv[])
 			}
 		}
 		catch (...) {
-			cout << " Checking period time invalid. Must be a number between 10 - 86400." << endl;
+			cout << " Checking period time invalid. Must be a number between 30 - 86400." << endl;
 		}
 	}
 
+	thread serverThread(&Server::runServer, Server(SERVER_ADDRESS)); // Run the server in the background thread
+
+	// Main checking loop
 	if (webList.uploadList(confFileName)) {
 		while (true) {
 			webList.checkAll();
 			webList.saveLog();
-			Sleep(checkingPeriod * 1000);
+			webList.updateHTML();
+
+			this_thread::sleep_for(chrono::seconds(checkingPeriod)); // Hard-coded delay
 		}
 	}
 	else {
 		cout << " Error while trying to open the file. Check the file name." << endl;
 	}
+
+	serverThread.detach(); // Terminate server thread 
 
 	return 0;
 }

@@ -2,7 +2,8 @@
 #include <boost/beast.hpp>
 #include <string>
 #include <iomanip>
-#include "WebPage.h"
+#include <iostream>
+#include "headers/WebPage.h"
 
 #define HTTP_PORT "80"
 
@@ -24,9 +25,7 @@ bool WebPage::request()
 	asio::ip::tcp::resolver resolver(context); // DNS resolver object
 	asio::ip::tcp::socket socket(context); // Networking socket object
 
-	cutProtocol();
-
-	string domain = solveDomain();
+	string domain = solveDomain(cutProtocol());
 	try {
 		asio::connect(socket, resolver.resolve(domain, HTTP_PORT)); // Establish connection with the target
 	}
@@ -35,7 +34,7 @@ bool WebPage::request()
 	}
 
 	// Form HTTP request
-	string dir = solveDirectory();
+	string dir = solveDirectory(cutProtocol());
 	http::request<http::string_body> req(http::verb::get, dir, 11); // Make a request to the certain page
 	req.set(http::field::host, domain);
 	req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
@@ -56,36 +55,39 @@ bool WebPage::request()
 /**
 * Parse domain from the URL
 */
-string WebPage::solveDomain()
+string WebPage::solveDomain(string npURL)
 {
-	if (url.find("/") == string::npos) {
-		return url;
+	if (npURL.find("/") == string::npos) {
+		return npURL;
 	}
 	else {
-		return url.substr(0, url.find("/"));
+		return npURL.substr(0, npURL.find("/"));
 	}
 }
 
 /**
 * Parse page of the URL
 */
-string WebPage::solveDirectory()
+string WebPage::solveDirectory(string npURL)
 {
-	if (url.find("/") == string::npos) {
+	if (npURL.find("/") == string::npos) {
 		return "/";
 	}
 	else {
-		return url.substr(url.find("/"));
+		return npURL.substr(npURL.find("/"));
 	}
 }
 
 /**
 * Cut the protocol from the url if present
 */
-void WebPage::cutProtocol()
+string WebPage::cutProtocol()
 {
 	if (url.find("//") != std::string::npos) {
-		url = url.substr(url.find("//") + 2);
+		return url.substr(url.find("//") + 2);
+	}
+	else {
+		return url;
 	}
 }
 
@@ -104,6 +106,16 @@ bool WebPage::checkCondition() const
 	else {
 		return true;
 	}
+}
+
+/// <summary>
+/// Print HTML representation of web page status
+/// </summary>
+string WebPage::getFormatHTML() const
+{
+	ostringstream lineOut;
+	lineOut << "<a href=\"" << url <<"\">" << url << "</a>" <<" " << status << " " << responseTime << "ms" << "</p>";
+	return lineOut.str();
 }
 
 /**

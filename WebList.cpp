@@ -7,8 +7,8 @@
 #include <string>
 #include <chrono>
 #include <ctime>
-#include "WebList.h"
-#include "WebPage.h"
+#include "headers/WebList.h"
+#include "headers/WebPage.h"
 
 #define LOGNAME_DEFAULT "weblist.log"
 
@@ -80,15 +80,71 @@ void WebList::saveLog() const
 	ofstream outputFile;
 	outputFile.open("weblist.log", std::ios_base::app); // Open file in append mode
 
-	// Print the log line by line in format:
-	// DATE TIME URL STATUS RESPONSE_TIME
 	for (auto page : webList) {
-		// Calculate current time 
-		auto currentTime = chrono::system_clock::now();
-		time_t time = chrono::system_clock::to_time_t(currentTime);
 
-		outputFile << put_time(gmtime(&time), "%F %X") << " " << page << endl;
+		outputFile << getTime() << " " << page << endl;
 	}
 
 	outputFile << endl;
+}
+
+void WebList::updateHTML() const
+{
+	ofstream outputFile;
+	outputFile.open("serverdir/index.html");
+
+	// Write to HTML file
+	outputFile << getHeadHTML();
+	for (auto page : webList) {
+		outputFile << "<pre p>" << getTime() << " " << page.getFormatHTML() << endl;
+	}
+	outputFile << getTailHTML();
+}
+
+/**
+* Calculate current time
+*/
+string WebList::getTime() const
+{
+	ostringstream timeStream;
+
+	auto currentTime = chrono::system_clock::now();
+	time_t time = chrono::system_clock::to_time_t(currentTime);
+	timeStream << put_time(gmtime(&time), "%F %X");
+
+	return timeStream.str();
+}
+
+/**
+* Obtain HEAD of the HTML file
+*/
+string WebList::getHeadHTML() const
+{
+	ostringstream temp;
+
+	temp << "<!DOCTYPE html>" << endl;
+	temp << "<html lang=\"en - US\">" << endl;
+	temp << "<head>" << endl;
+	temp << "	<meta charset=\"utf - 8\">" << endl;
+	temp << "	<title>WEB MONITOR</title>" << endl;
+	temp << "</head>" << endl;
+	temp << "<body>" << endl;
+	temp << "<main>" << endl;
+
+	return temp.str();
+}
+
+/**
+* Obtain the rest of the HTML page
+*/
+string WebList::getTailHTML() const
+{
+	ostringstream temp;
+
+	temp << "</main>" << endl;
+	temp << "<hr>" << endl;
+	temp << "<p> Web Monitor by Pavel Arefyev </p>" << endl;
+	temp << "</html>";
+
+	return temp.str();
 }
