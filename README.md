@@ -77,6 +77,7 @@ The path must not include non-ASCII characters.
 
 * Decrease additional delays by redesigning the order in checkAll() member function of WebList class.
 * Change the parsing of command line options to fit the modern designs
+* Clear log file depending on the file size
 
 # References and additional materials
 
