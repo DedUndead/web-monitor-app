@@ -17,7 +17,7 @@
 #define CHECK_TIME_MAX 86400
 #define CHECK_TIME_DEFAULT 30
 #define ARG_MAX 3 // Maximum number of arguments
-#define SERVER_ADDRESS "http://localhost:8000"
+#define SERVER_ADDRESS "http://0.0.0.0:8000"
 
 using namespace std;
 
