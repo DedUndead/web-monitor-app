@@ -2,9 +2,9 @@
 Console application for monitoring HTTP webpages made by Pavel Arefyev.<br>
 The program is done **entirely** in **C++**. However, GitHub sees it as in C, because there is C-library source code included in the project.
 
+Usage is implemented as a docker image. Detailed information can be found on [DockerHub](https://hub.docker.com/repository/docker/paulbekk/webmonitor).
 
 # User Interface
-
 
 ### Main algorithm
 
